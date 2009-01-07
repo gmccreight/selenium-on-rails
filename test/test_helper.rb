@@ -3,6 +3,30 @@ RAILS_ROOT = "test" unless defined?(RAILS_ROOT)
 $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 
 require 'rubygems'
+
+#----------------------------------------------------------------------------
+# Start RedCloth stuff
+#
+# As of this writing, the most recent version of RedCloth is 4.1.1.
+# Unlike the version 3 series of RedCloth, 4.1 appears to need to
+# be explicitly required in order for defined? RedCloth to evaluate
+# to true.
+begin
+  require 'RedCloth' # Needed for RedCloth 4.x (is not needed for 3.x)
+  rescue LoadError
+    # The require 'RedCloth' failed, but that's OK.
+
+    # If you have RedCloth 3:
+    # the require will fail silently, but everything will still work ok.
+
+    # If no RedCloth gem is installed:
+    # the require will fail silently, but the tests will still run.
+    # A couple of them will fail because their markup is not correctly
+    # processed by RedCloth, though.
+end
+# End RedCloth stuff
+#----------------------------------------------------------------------------
+
 gem 'activesupport'
 require 'active_support'
 
